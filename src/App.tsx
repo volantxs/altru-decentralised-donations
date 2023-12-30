@@ -9,24 +9,25 @@ const App = () => {
   const [api, setApi] = useState<ApiPromise>();
 
   const setup = async () => {
-    const wsProvider = new WsProvider("wss://rpc.polkadot.io");
+    const wsProvider = new WsProvider("wss://ws.gm.bldnodes.org/");
     const api = await ApiPromise.create({provider: wsProvider});
     setApi(api);
+
   }
 
   useEffect(() => {
     setup();
+    
   }, [])
 
   useEffect(() => {
     if(!api) return
-
+    console.log("hiiasii");
     (async() => {
       const time = await api.query.timestamp.now();
-      console.log(time);
-    })
-
-  }, [])
+      console.log(time.toPrimitive());  //toPrimitive is like json
+    })();
+  }, [api]);
 
   return (
     <>
